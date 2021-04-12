@@ -8,6 +8,8 @@ Route.delete('/user/:id', 'UserController.destroy').middleware('authUser')
 Route.put('/user/:id', 'UserController.update').middleware('authUser')
 Route.post('/login', 'LoginController.login')
 
+Route.post('/aluguel/:id/images', 'ImageController.store').middleware('authUser')
+
 Route.resource('/admin', 'AdminController').middleware('authAdmin').apiOnly()
 Route.post('/loginAdmin', 'LoginController.loginAdmin')
 

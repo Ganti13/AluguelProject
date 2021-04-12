@@ -36,7 +36,7 @@ class UserController {
 			return user
 		} catch(e) {
 			// statements
-			return {erro: e}
+			return {erro: 'something went wrong'}
 		}
 	}
 
@@ -44,7 +44,7 @@ class UserController {
 	async update({request, params}){
 		const data = request.only(['username', 'email', 'password', 'phone'])
 
-		if (params.id !== request.userId) {return {erro: 'not allowed'}}
+		if (data.id !== request.userId) {return {erro: 'not allowed'}}
 
 		const rules = {
 			username: 'required|min:2',
@@ -79,7 +79,7 @@ class UserController {
 			return user
 
 		} catch(e) {
-			// statements
+			
 			return {erro: 'something went wrong'}
 		}
 	}
@@ -93,7 +93,7 @@ class UserController {
 			await user.delete()
 			return {message:'deletado com sucesso'}
 		} catch(e) {
-			// statements
+			
 			return {erro: 'something went wrong'}
 		}
 	}

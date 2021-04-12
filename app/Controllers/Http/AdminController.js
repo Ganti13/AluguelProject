@@ -14,7 +14,7 @@ class AdminController {
     } catch(e) {
       
       
-      return {erro: e}
+      return {erro: 'something went wrong'}
     }
   }
 
@@ -29,7 +29,7 @@ class AdminController {
 			return admin
 		} catch(e) {
 			// statements
-			return {erro:e}
+			return {erro:'something went wrong'}
 		}
 	}
 
@@ -42,7 +42,7 @@ class AdminController {
 			return  aluguel
 		} catch(e) {
 			// statements
-			return {erro: e}
+			return {erro: 'something went wrong'}
 		}
 	}
 
@@ -55,7 +55,7 @@ class AdminController {
 			return {message: 'deletado com sucesso'}
 		} catch(e) {
 			
-			return {erro: e}
+			return {erro: 'something went wrong'}
 		}
 	}
 }

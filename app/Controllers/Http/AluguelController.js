@@ -9,7 +9,7 @@ class AluguelController {
   async index ({request}) {
 
     try {
-      const aluguel = await Aluguel.query().where('user_id', request.userId).fetch()
+      const aluguel = await Aluguel.query().where('user_id', request.userId).with('images').fetch()
 
       return aluguel
 
@@ -67,6 +67,7 @@ class AluguelController {
   async update ({ params, request}) {
     const data = request.only(['titulo','descricao'])
 
+    if (aluguel.user_id !== request.userId) {return {message: 'not allowed'}}
 
     const rules = {
       titulo: 'required|min:3|max:50',
@@ -89,7 +90,6 @@ class AluguelController {
     
     try {
       const aluguel = await Aluguel.findOrFail(params.id)
-      if (aluguel.user_id !== request.userId) {return {message: 'not allowed'}}
       await aluguel.merge(data)
       await aluguel.save()
 
@@ -101,9 +101,9 @@ class AluguelController {
 
   
   async destroy ({params, request}) {
+    if (aluguel.user_id !== request.userId ) {return {message: 'not allowed'}}
     try {
       const aluguel = await Aluguel.findOrFail(params.id)
-      if (aluguel.user_id !== request.userId ) {return {message: 'not allowed'}}
 
       await aluguel.delete()
 
