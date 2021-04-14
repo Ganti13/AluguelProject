@@ -20,7 +20,7 @@ class LoginController {
 
 			const token = await jwt.sign({id: user.id}, process.env.APP_KEY, {expiresIn: '1d'})
 
-			return token
+			return {type: 'Bearer', token: token}
 
 		} catch(e) {
 			// statements

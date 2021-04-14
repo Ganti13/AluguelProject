@@ -2,7 +2,6 @@
 
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Model = use('Model')
-
 class Image extends Model {
 
 	static get computed () {
@@ -10,7 +9,7 @@ class Image extends Model {
   	}
 
   	getUrl ({ path }) {
-    	return `${Env.get('APP_URL')}/images/${path}`
+    	return `${process.env.APP_URL}/images/${path}`
   	}
 
 

@@ -8,7 +8,7 @@ class UserController {
 		const data = request.only(['username','email','password', 'phone'])
 
 		const rules = {
-			username: 'required|min:2',
+			username: 'required|min:2|unique:users',
 			email: 'required|unique:users|email',
 			password: 'required|min:6',
 			phone: 'required'
@@ -16,6 +16,7 @@ class UserController {
 
 		const messages = {
 			'username.required': 'insira um nome valido',
+			'username.unique': 'Esse nome já esta em uso',
 			'username.min': 'nome muito curto',
 			'email.required': 'digite um email',
 			'email.unique': 'email ja cadastrado',
@@ -33,10 +34,10 @@ class UserController {
 
 		try {
 			const user = await User.create(data)
+			user.password = undefined
 			return user
 		} catch(e) {
-			// statements
-			return {erro: 'something went wrong'}
+			return {message: 'something went wrong', erro: e}
 		}
 	}
 
@@ -47,7 +48,7 @@ class UserController {
 		if (data.id !== request.userId) {return {erro: 'not allowed'}}
 
 		const rules = {
-			username: 'required|min:2',
+			username: 'required|min:2|unique:users',
 			email: 'required|unique:users|email',
 			password: 'required|min:6',
 			phone: 'required'
@@ -56,6 +57,7 @@ class UserController {
 		const messages = {
 			'username.required': 'insira um nome valido',
 			'username.min': 'nome muito curto',
+			'username.unique': 'Esse nome já esta em uso',
 			'email.required': 'digite um email',
 			'email.unique': 'email ja cadastrado',
 			'email.email': 'digite um email valido',
@@ -76,6 +78,7 @@ class UserController {
 			const user = await User.findOrFail(params.id)
 			await user.merge(data)
 			await user.save()
+			user.password = undefined
 			return user
 
 		} catch(e) {
