@@ -2,8 +2,8 @@
 
 const  User = use('App/Models/User')
 const Admin = use('App/Models/Admin')
-const bcrypt = use('bcryptjs')
 const jwt = use('jsonwebtoken')
+const Hash = use('Hash')
 
 class LoginController {
 
@@ -14,7 +14,7 @@ class LoginController {
 			const user = await User.findBy({email})
 			if (!user) {return {message: 'invalid login'}}
 
-			const response = await bcrypt.compare(password, user.password)
+			const response = await Hash.verify(password, user.password)
 
 			if (!response) {return {message: 'invalid login'}}
 
@@ -24,7 +24,7 @@ class LoginController {
 
 		} catch(e) {
 			// statements
-			return {erro: e}		
+			return {message: 'somenthing went wrong', erro: e}		
 		}
 	}
 
@@ -33,11 +33,12 @@ class LoginController {
 
 		try {
 			const admin = await Admin.findBy({email})
+			console.log(admin.password)
 			if (!admin) {return {message: 'invalid login'}}
 
 			if (admin.password.length > 30) {
 
-				const response = await bcrypt.compare(password, admin.password)
+				const response = await Hash.verify(password, admin.password)
 
 
 				if (!response) {return {message: 'invalid login'}}
@@ -52,9 +53,6 @@ class LoginController {
 				const token = await jwt.sign({id: admin.id}, process.env.APP_KEY_ADMIN, {expiresIn: '1d'})
 				return token
 			}
-
-			
-
 
 		} catch(e) {
 			// statements
