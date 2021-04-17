@@ -1,15 +1,15 @@
 'use strict'
 
 const Admin = use('App/Models/Admin')
-const Aluguel = use('App/Models/Aluguel')
+const Imovel = use('App/Models/Imovel')
 
 class AdminController {
 
 	async index ({request}) {
     try {
-      const aluguel = await Aluguel.query().orderBy('created_at', 'desc').fetch()
+      const imovel = await Imovel.query().orderBy('created_at', 'desc').fetch()
 
-      return aluguel
+      return imovel
 
     } catch(e) {
       
@@ -36,10 +36,10 @@ class AdminController {
 	async update({request, params}){
 		const data = request.only(['status'])
 		try {
-			const aluguel = await Aluguel.findOrFail(params.id)
-			await aluguel.merge(data)
-			await aluguel.save()
-			return  aluguel
+			const imovel = await Imovel.findOrFail(params.id)
+			await imovel.merge(data)
+			await imovel.save()
+			return  imovel
 		} catch(e) {
 			// statements
 			return {erro: 'something went wrong'}
@@ -49,8 +49,8 @@ class AdminController {
 
 	async destroy ({params}){
 		try {
-			const aluguel = await Aluguel.findOrFail(params.id)
-			await aluguel.delete()
+			const imovel = await Imovel.findOrFail(params.id)
+			await imovel.delete()
 
 			return {message: 'deletado com sucesso'}
 		} catch(e) {

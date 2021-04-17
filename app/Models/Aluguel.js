@@ -2,7 +2,7 @@
 
 const Model = use('Model')
 
-class Aluguel extends Model {
+class Imovel extends Model {
 
 
 	user(){
@@ -15,4 +15,4 @@ class Aluguel extends Model {
 	}
 }
 
-module.exports = Aluguel
+module.exports = Imovel

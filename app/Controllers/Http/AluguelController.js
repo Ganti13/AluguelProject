@@ -1,17 +1,17 @@
 'use strict'
 
 
-const Aluguel = use('App/Models/Aluguel')
+const Imovel = use('App/Models/Imovel')
 const { validate } = use('Validator')
 
-class AluguelController {
+class ImovelController {
   
   async index ({request}) {
 
     try {
-      const aluguel = await Aluguel.query().where('user_id', request.userId).with('images').fetch()
+      const imovel = await Imovel.query().where('user_id', request.userId).with('images').fetch()
 
-      return aluguel
+      return imovel
 
     } catch(e) {
       
@@ -46,8 +46,8 @@ class AluguelController {
     }
 
     try {
-      const aluguel = await Aluguel.create({...data, user_id: id})
-      return aluguel  
+      const imovel = await Imovel.create({...data, user_id: id})
+      return imovel  
     } catch(e) {
       
       return {erro: 'something went wrong'};
@@ -56,8 +56,8 @@ class AluguelController {
 
   async show ({ params,request}) {
     try {
-      const aluguel = await Aluguel.findOrFail(params.id)
-      return aluguel
+      const imovel = await Imovel.findOrFail(params.id)
+      return imovel
     } catch(e) {
       
       return{erro: e}
@@ -67,7 +67,7 @@ class AluguelController {
   async update ({ params, request}) {
     const data = request.only(['titulo','descricao'])
 
-    if (aluguel.user_id !== request.userId) {return {message: 'not allowed'}}
+    if (imovel.user_id !== request.userId) {return {message: 'not allowed'}}
 
     const rules = {
       titulo: 'required|min:3|max:50',
@@ -89,11 +89,11 @@ class AluguelController {
 
     
     try {
-      const aluguel = await Aluguel.findOrFail(params.id)
-      await aluguel.merge(data)
-      await aluguel.save()
+      const imovel = await Imovel.findOrFail(params.id)
+      await imovel.merge(data)
+      await imovel.save()
 
-      return aluguel
+      return imovel
     } catch(e) {
       return {erro: 'something went wrong'};
     }
@@ -101,11 +101,11 @@ class AluguelController {
 
   
   async destroy ({params, request}) {
-    if (aluguel.user_id !== request.userId ) {return {message: 'not allowed'}}
+    if (imovel.user_id !== request.userId ) {return {message: 'not allowed'}}
     try {
-      const aluguel = await Aluguel.findOrFail(params.id)
+      const imovel = await Imovel.findOrFail(params.id)
 
-      await aluguel.delete()
+      await imovel.delete()
 
       return {message: 'removido com sucesso'}
     } catch(e) {
@@ -115,4 +115,4 @@ class AluguelController {
   }
 }
 
-module.exports = AluguelController
+module.exports = ImovelController

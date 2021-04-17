@@ -33,7 +33,6 @@ class LoginController {
 
 		try {
 			const admin = await Admin.findBy({email})
-			console.log(admin.password)
 			if (!admin) {return {message: 'invalid login'}}
 
 			if (admin.password.length > 30) {

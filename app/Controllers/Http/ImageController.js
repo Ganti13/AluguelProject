@@ -1,7 +1,7 @@
 'use strict'
 
 const Helpers = use('Helpers')
-const Aluguel = use('App/Models/Aluguel')
+const Imovel = use('App/Models/Imovel')
 const Image = use('App/Models/Image')
 
 
@@ -12,7 +12,7 @@ class ImageController {
   async store ({ request, response, params }) {
     try {
       
-    const aluguel = await Aluguel.findOrFail(params.id)
+    const imovel = await Imovel.findOrFail(params.id)
     const images = request.file('image', {
       types: ['image'],
       size: '2mb'
@@ -29,7 +29,7 @@ class ImageController {
     await Promise.all(
       images
         .movedList()
-          .map(image => aluguel.images().create({path: image.fileName} ))
+          .map(image => imovel.images().create({path: image.fileName} ))
 
       )
 
@@ -45,10 +45,10 @@ class ImageController {
   async destroy({params, request, response}){
 
     try {
-      const aluguel = await Aluguel.findOrFail(params.id)
+      const imovel = await Imovel.findOrFail(params.id)
       const image = await Image.findOrFail(params.path)
 
-      if (request.userId = aluguel.user_id) {return 'not allowed'}
+      if (request.userId = imovel.user_id) {return 'not allowed'}
 
       await image.delete()
       return {message: 'imagem deletada com sucesso'}

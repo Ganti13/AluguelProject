@@ -2,9 +2,9 @@
 
 const Schema = use('Schema')
 
-class AluguelSchema extends Schema {
+class ImovelSchema extends Schema {
   up () {
-    this.create('aluguels', (table) => {
+    this.create('imoveis', (table) => {
       table.increments()
       table.integer('user_id').unsigned().references('id').inTable('users').onUpdate('CASCADE').onDelete('CASCADE')
       table.string('titulo').notNullable()
@@ -15,8 +15,8 @@ class AluguelSchema extends Schema {
   }
 
   down () {
-    this.drop('aluguels')
+    this.drop('imoveis')
   }
 }
 
-module.exports = AluguelSchema
+module.exports = ImovelSchema

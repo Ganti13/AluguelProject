@@ -20,8 +20,8 @@ class User extends Model {
     return this.hasMany('App/Models/Token')
   }
 
-  aluguels(){
-    return this.hasMany('App/Models/Aluguel')
+  imoveis(){
+    return this.hasMany('App/Models/Imovel')
   }
 }
 
