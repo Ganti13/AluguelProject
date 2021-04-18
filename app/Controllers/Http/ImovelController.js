@@ -50,7 +50,7 @@ class ImovelController {
       return imovel  
     } catch(e) {
       
-      return {erro: 'something went wrong'};
+      return {message: 'something went wrong', erro: e};
     }
   }
 

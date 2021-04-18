@@ -51,6 +51,8 @@ class LoginController {
 			if (admin.password === password) {
 				const token = await jwt.sign({id: admin.id}, process.env.APP_KEY_ADMIN, {expiresIn: '1d'})
 				return {type: 'Bearer', token: token}
+			}else{
+				return {message: 'invalid login'}
 			}
 
 		} catch(e) {
