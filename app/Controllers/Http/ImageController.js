@@ -48,7 +48,7 @@ class ImageController {
       const imovel = await Imovel.findOrFail(params.id)
       const image = await Image.findOrFail(params.path)
 
-      if (request.userId = imovel.user_id) {return 'not allowed'}
+      if (request.userId !== imovel.user_id) {return 'not allowed'}
 
       await image.delete()
       return {message: 'imagem deletada com sucesso'}
