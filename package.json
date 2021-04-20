@@ -27,7 +27,8 @@
     "@adonisjs/mail": "^7.0.0",
     "@adonisjs/validator": "^5.0.6",
     "@adonisjs/view": "^5.0.2",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "nodemailer": "^6.5.0"
   },
   "devDependencies": {},
   "autoload": {

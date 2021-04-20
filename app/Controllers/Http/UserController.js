@@ -45,8 +45,7 @@ class UserController {
 	async update({request, params}){
 		const data = request.only(['username', 'email', 'password', 'phone'])
 
-		if (data.id !== request.userId) {return {erro: 'not allowed'}}
-
+		
 		const rules = {
 			username: 'required|min:2|unique:users',
 			email: 'required|unique:users|email',
@@ -65,17 +64,18 @@ class UserController {
 			'password.min': 'senha muita curta',
 			'phone.required': 'digite um numero de telefone'
 		}
-
+		
 		const validation = await validate(data, rules, messages)
-
+		
 		if (validation.fails()) {
 			return {erro: validation.messages()}
 		}
-
-
+		
+		
 		try {
 			
 			const user = await User.findOrFail(params.id)
+			if (user.id !== request.userId) {return {erro: 'not allowed'}}
 			await user.merge(data)
 			await user.save()
 			user.password = undefined
@@ -89,10 +89,10 @@ class UserController {
 
 
 	async destroy({params, request}){
-		if (params.id !== request.userId) {return {erro: 'not allowed'}}
 		try {
 			const user = await User.findOrFail(params.id)
-
+			if (user.id !== request.userId) {return {erro: 'not allowed'}}
+			
 			await user.delete()
 			return {message:'deletado com sucesso'}
 		} catch(e) {

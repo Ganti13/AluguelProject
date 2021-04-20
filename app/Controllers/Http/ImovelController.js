@@ -92,20 +92,20 @@ class ImovelController {
       const imovel = await Imovel.findOrFail(params.id)
       await imovel.merge(data)
       await imovel.save()
-
       return imovel
     } catch(e) {
       return {erro: 'something went wrong'};
     }
   }
 
-  
+
   async destroy ({params, request}) {
     if (imovel.user_id !== request.userId ) {return {message: 'not allowed'}}
     try {
       const imovel = await Imovel.findOrFail(params.id)
 
       await imovel.delete()
+
 
       return {message: 'removido com sucesso'}
     } catch(e) {
